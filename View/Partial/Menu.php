@@ -1,0 +1,10 @@
+<a href="<?php echo BASE_DIR ?>">Home</a> | 
+<a href="<?php echo BASE_DIR ?>?c=user">User</a> | 
+<a href="<?php echo BASE_DIR ?>?c=Group">Group</a> |
+<a href="<?php echo BASE_DIR ?>?c=Administrator">Administrator</a> |
+<a href="<?php echo BASE_DIR ?>?c=Country">Country</a> |
+<a href="<?php echo BASE_DIR ?>?c=Member">Member</a> |
+<a href="<?php echo BASE_DIR ?>?c=GroupDetails">GroupeDetails</a> |
+<a href="<?php echo BASE_DIR ?>?c=File">File</a> |
+<a href="<?php echo BASE_DIR ?>?c=Comment">Comment</a> |
+<a href="<?php echo BASE_DIR ?>?c=Moderator">Moderator</a> |
