@@ -4,7 +4,6 @@
 ---------------------------------------------------
 */ 
 namespace Model;
-include ('Moderator.php');
 class Administrator extends Moderator{
 	
 }

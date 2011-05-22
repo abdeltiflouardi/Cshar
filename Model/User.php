@@ -4,7 +4,6 @@
 ---------------------------------------------------
 */ 
 namespace Model;
-include ('Member.php');
 class User extends Member{
 
 }
