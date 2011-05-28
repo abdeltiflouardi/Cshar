@@ -4,7 +4,7 @@
 ---------------------------------------------------
 */
 namespace Model;
-class GroupDetails{
+class GroupDetails extends AppModel{
 	private $member;
 	private $group;
 	private $dateOfIntegration;

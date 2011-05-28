@@ -3,7 +3,7 @@
 ----------------Class : Membre --------------------
 --------------------------------------------------*/
 namespace Model;
-abstract class Member {
+class Member extends AppModel{
 	protected $id;
 	protected $login;
 	protected $firstName;
@@ -48,7 +48,7 @@ abstract class Member {
 	
 /*----------------LastName Methods--------------*/
 
-	public function getLasttName(){
+	public function getLastName(){
 		return $this->lastName;
 	}
 	

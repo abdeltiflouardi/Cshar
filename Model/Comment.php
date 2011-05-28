@@ -4,7 +4,7 @@
 ---------------------------------------------------
 */ 
 namespace Model;
-class Comment{
+class Comment extends AppModel{
 	private $id;
 	private $file;
 	private $member;

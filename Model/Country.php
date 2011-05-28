@@ -1,32 +1,28 @@
 <?php
-/*-------------------------------------------------
---------------------:Class Pays:-------------------
----------------------------------------------------
-*/ 
+
 namespace Model;
-class Country{
-	private $id;
-	private $name;
-	
-/*----------------Id Pays Methods--------------*/
 
-	public function getId(){
-		return $this->id;
-	}
-	
-	public function setId($id){
-		$this->id=$id;
-	}
+class Country extends AppModel {
 
-/*----------------Member Methods--------------*/
+    private $id;
+    private $name;
+    
+    // Id Pays Methods
+    public function setId($id) {
+        $this->id = $id;
+    }    
+    public function getId() {
+        return $this->id;
+    }
 
-	public function getName(){
-		return $this->name;
-	}
-	
-	public function setName($name){
-		$this->name=$name;
-	}
-	
+    // Member Methods
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+    }
 }
+
 ?>

@@ -1,5 +1,6 @@
 <?php
 namespace Controller;
+use \Model\Administrator;
 class AdministratorController extends AppController{
 	
 	public function add(){
@@ -15,7 +16,9 @@ class AdministratorController extends AppController{
 	}
 	
 	public function index(){
-		$this->view('administrator', 'index');
+        $administrator=new Administrator();
+        $administrators=$administrator->fetchAll();
+		$this->view('administrator', 'index',compact('administrators'));
 	}
 	
 }

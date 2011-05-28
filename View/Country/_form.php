@@ -1,13 +1,13 @@
-<fieldset id="country-form">
-  <legend>Pays</legend>
-  <form>
-    <div class="input-row">
-      <label for="country">Country :</label>
-      <input type="text" name="country" id="country">
-    </div>
-    <div class="input-row">
-      <input type="submit" name="valid" value="Valider">
-      <input type="reset" name="reset" value="Vider">
-    </div>
-  </form>
-</fieldset>
+<form action="<?php echo BASE_DIR ?>?c=Country&m=add" method="POST">
+    <fieldset>
+        <legend>Formulaire pays</legend>
+        <div class="input text">
+            <label>Nom</label>
+            <input id="name" type="text" name="country[name]" />
+        </div>
+        
+        <div class="input submit">
+            <input type="submit" value="Ajouter" />
+        </div>
+    </fieldset>
+</form>

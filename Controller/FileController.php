@@ -1,8 +1,10 @@
 <?php
 namespace Controller;
+use Model\File;
 class FileController extends AppController{
 	
 	public function add(){
+        $this->view('file','add');
 	}
 	
 	public function update(){
@@ -15,7 +17,9 @@ class FileController extends AppController{
 	}
 	
 	public function index(){
-		$this->view('file', 'index');
+        $file=new File();
+        $files=$file->fetchAll();
+		$this->view('file', 'index',compact('files'));
 	}
 	
 }

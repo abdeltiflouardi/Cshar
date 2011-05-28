@@ -1,5 +1,8 @@
 <?php
 namespace Controller;
+
+use Model\Member;
+
 class MemberController extends AppController{
 	
 	public function add(){
@@ -11,13 +14,15 @@ class MemberController extends AppController{
 	public function delete(){
 	}
 	
-	public static function show($bdd) {
-		$request=$bdd->query("SELECT * FROM membre");
-		return $request;
+	public static function show() {
+
 	}
 	
 	public function index(){
-		$this->view('member', 'index');
+        $member=new Member();
+        $members=$member->fetchAll();
+        $this->view('Member','index',compact('members'));
+   
 	}
 	
 }

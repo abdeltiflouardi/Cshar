@@ -4,13 +4,13 @@
 ---------------------------------------------------
 */
 namespace Model;
-class File{
+class File extends AppModel{
 	private $id;
 	private $group;
 	private $name;
 	private $link;
-	private $dateOfEmission;
-	private $dateOfLastDownload;
+	private $created;
+	private $downloaded;
 	
 /*----------------Id Methods--------------*/
 
@@ -54,22 +54,22 @@ class File{
 	
 /*----------------Date de l'emmission Methods-----------*/
 
-	public function getDateOfEmission(){
-		return $this->dateOfEmission;
+	public function getCreated(){
+		return $this->created;
 	}
 	
-	public function setDateOfEmission($dateOfEmission){
-		$this->dateOfEmission=$dateOfEmission;
+	public function setCreated($created){
+		$this->created=$created;
 	}
 	
 /*--------Date du dernier telechargement Methods--------*/
 
-	public function getDateOfLastDownload(){
-		return $this->dateOfLastDownload;
+	public function getDownloaded(){
+		return $this->downloaded;
 	}
 	
-	public function setDateOfLastDownload($dateOfLastDownload){
-		$this->dateOfLastDownload=$dateOfLastDownload;
+	public function setDownloaded($downloaded){
+		$this->downloaded=$downloaded;
 	}
 } 
 ?>

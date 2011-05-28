@@ -1,6 +1,6 @@
 <a href="<?php echo BASE_DIR ?>">Home</a> | 
-<a href="<?php echo BASE_DIR ?>?c=user">User</a> | 
-<a href="<?php echo BASE_DIR ?>?c=Group">Group</a> |
+<a href="<?php echo BASE_DIR ?>?c=User">User</a> |
+<a href="<?php echo BASE_DIR ?>?c=Groups">Groups</a> |
 <a href="<?php echo BASE_DIR ?>?c=Administrator">Administrator</a> |
 <a href="<?php echo BASE_DIR ?>?c=Country">Country</a> |
 <a href="<?php echo BASE_DIR ?>?c=Member">Member</a> |

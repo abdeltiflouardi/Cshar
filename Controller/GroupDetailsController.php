@@ -1,5 +1,6 @@
 <?php
 namespace Controller;
+use Model\GroupDetails;
 class GroupDetailsController extends AppController{
 	
 	public function add(){
@@ -15,7 +16,9 @@ class GroupDetailsController extends AppController{
 	}
 	
 	public function index(){
-		$this->view('groupDetails', 'index');
+        $groupdetails=new GroupDetails();
+        $groupsdetails=$groupdetails->fetchAll();
+		$this->view('groupDetails', 'index',compact('groupsdetails'));
 	}
 	
 }

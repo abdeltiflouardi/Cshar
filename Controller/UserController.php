@@ -1,5 +1,6 @@
 <?php
 namespace Controller;
+use Model\User;
 class UserController extends AppController{
 	
 	public function add(){
@@ -15,7 +16,10 @@ class UserController extends AppController{
 	}
 	
 	public function index(){
-		$this->view('user', 'index');
+        $user=new User();
+        $users=$user->fetchAll();
+
+		$this->view('user', 'index',compact('users'));
 	}
 	
 	

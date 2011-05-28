@@ -1,5 +1,6 @@
 <?php
 namespace Controller;
+use \Model\Moderator;
 class ModeratorController extends AppController{
 	
 	public function add(){
@@ -15,7 +16,9 @@ class ModeratorController extends AppController{
 	}
 	
 	public function index(){
-		$this->view('moderator', 'index');
+        $moderator=new Moderator();
+        $moderators=$moderator->fetchAll();
+		$this->view('moderator', 'index',compact('moderators'));
 	}
 	
 }
