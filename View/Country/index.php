@@ -17,8 +17,12 @@
         <td><?php echo $country->getName(); ?></td>
         <td>
             <a href="<?php echo BASE_DIR ?>?c=Country&m=delete&id=<?php echo $country->getId(); ?>">
-                Supprimer
+                   Supprimer
             </a>
+            <a href="<?php echo BASE_DIR ?>?c=Country&m=update&id=<?php echo $country->getId(); ?>">
+                Modifier
+            </a>
+
         </td>
     </tr>
     <?php endforeach; ?>

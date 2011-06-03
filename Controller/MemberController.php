@@ -12,6 +12,11 @@ class MemberController extends AppController{
 	}
 	
 	public function delete(){
+         $id = $_GET['id'];
+         $member = new Member();
+         $member->setId($id);
+         $member->delete();
+         $this->redirect('?c=Member');
 	}
 	
 	public static function show() {

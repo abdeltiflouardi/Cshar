@@ -18,7 +18,15 @@ class Database {
     
     static function delete($data) {
         return self::getDriver()->delete($data);
-    }    
+    }
+
+    static function update($data){
+        return self::getDriver()->update($data);
+    }
+
+    static function fetch($data){
+        return self::getDriver()->fetch($data);
+    }
 	
 }
 ?>

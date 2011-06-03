@@ -18,10 +18,20 @@ class CountryController extends AppController {
             }
             $this->view('Country', 'add');
 	}
-	
-	public function update() {
-	}
-	
+
+    public function update(){
+        $id=$_GET['id'];
+        $country=new Country();
+        $country->setId($id);
+        $countries=$country->fetch();
+
+        if(isset($_POST['modify'])){
+            $country->update($_POST['country']);
+            $this->redirect("?c=Country");
+        }
+        $this->view('Country','update',compact('countries'));
+    }
+
 	public function delete() {
             $id = $_GET['id'];
             $country = new Country();

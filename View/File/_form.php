@@ -2,7 +2,12 @@
 <fieldset id="file-form">
   <legend>Fichier</legend>
     <div class="input text">
-     <label for="group">groupe :</label><select id="group" name="group"><option></option></select>
+     <label for="group">groupe :</label><select id="group" name="group">
+     <?php foreach ($groups as $group){?>
+        <option value="<?php echo $group->getId();?>"><?php echo $group->getName();?></option>
+        <?php }?>
+
+    </select>
     </div>
     <div class="input text">
      <label for="file-name">Nom du fichier :</label><input type="text" name="file-name" id="file-name">

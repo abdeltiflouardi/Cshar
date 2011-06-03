@@ -35,6 +35,11 @@
                 Supprimer
             </a>
         </td>
+        <td>
+            <a href="<?php echo BASE_DIR ?>?c=User&m=update&id=<?php echo $user->getId();?>">
+                Modifier
+            </a>
+        </td>
     </tr>
     <?php endforeach; ?>
 </table>

@@ -1,7 +1,7 @@
 <?php include __DIR__ . DS . '..' . DS . 'Partial' . DS . 'Menu.php';?>
 
 <h3>Page Moderator()</h3>
-    <a href="<?php echo BASE_DIR ?>?c=Moderator&m=add">Ajouter un Utilisateur</a>
+    <a href="<?php echo BASE_DIR ?>?c=Moderator&m=add">Ajouter un Mod&eacute;rateur</a>
 
 <table>
     <tr>
@@ -33,6 +33,11 @@
         <td>
             <a href="<?php echo BASE_DIR ?>?c=Moderator&m=delete&id=<?php echo $moderator->getId(); ?>">
                 Supprimer
+            </a>
+        </td>
+        <td>
+            <a href="<?php echo BASE_DIR ?>?c=Moderator&m=update&id=<?php echo $moderator->getId();?>">
+                Modifier
             </a>
         </td>
     </tr>

@@ -26,6 +26,11 @@ class CommentController extends AppController{
 	}
 	
 	public function delete(){
+         $id = $_GET['id'];
+         $comment = new Comment();
+         $comment->setId($id);
+         $comment->delete();
+         $this->redirect('?c=Comment');
 	}
 	
 	public function show() {

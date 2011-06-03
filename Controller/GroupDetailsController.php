@@ -10,6 +10,11 @@ class GroupDetailsController extends AppController{
 	}
 	
 	public function delete(){
+         $id = $_GET['id'];
+         $groupdetails = new GroupDetails();
+         $groupdetails->setId($id);
+         $groupdetails->delete();
+         $this->redirect('?c=GroupDetails');
 	}
 	
 	public function show() {

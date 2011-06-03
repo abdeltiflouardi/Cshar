@@ -34,6 +34,9 @@
             <a href="<?php echo BASE_DIR ?>?c=Administrator&m=delete&id=<?php echo $administrator->getId(); ?>">
                 Supprimer
             </a>
+             <a href="<?php echo BASE_DIR ?>?c=Administrator&m=update&id=<?php echo $administrator->getId();?>">
+                Modifier
+            </a>
         </td>
     </tr>
     <?php endforeach; ?>
