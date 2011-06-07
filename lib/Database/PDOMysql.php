@@ -131,45 +131,41 @@ class PDOMysql {
         return $cn->exec($sql);
     }
 
-    public function update($data){
-        $sql="UPDATE {{ TABLE }} set {{ FIELD }} = {{ VALUE }} WHERE id={{ ID }}";
-        $table = \Parser::getDatabaseTableName(get_class($data));
-        foreach (get_class_methods($data) as $method) {
+     public function update($data) {
+	    $sql = "update {{ TABLE }} SET {{ FIELDS_VALUES }} WHERE id={{ ID }}";
 
-            if (substr($method, 0, 3) != 'get')
-                continue;
+            $table = \Parser::getDatabaseTableName(get_class($data));
 
-            if (is_null($data->{$method}()))
-                continue;
+           foreach (get_class_methods($data) as $method) {
+                if (substr($method, 0, 3) != 'get')
+                    continue;
 
-            $field = \Parser::getFieldNameFromMethod($method);
+                if (is_null($data->{$method}()))
+                    continue;
 
-            $fields[] = $field;
-            $values[] = "'" . $data->{$method}() . "'";
+                $field = \Parser::getFieldNameFromMethod($method);
+
+
+                $fields_values[] = $field . "='" . $data->{$method}() . "'";
+            }
+
+            $fields_values_string = implode(', ', $fields_values);
+
+            $id = $data->getId();
+
+            $sql = str_replace(
+                array('{{ TABLE }}', '{{ FIELDS_VALUES }}', '{{ ID }}'), compact('table', 'fields_values_string', 'id'), $sql
+            );
+
+            $cn = $this->connect();
+            return $cn->exec($sql);
         }
-        if($table=="user" or $table=="User" or $table=="Moderator" or $table=="moderator" or $table=="Administrator" or $table=="administrator") $table="member";
-
-        $id=$data->getId();
-        for($i=0;$i<count($fields);$i++){
-        $sql=str_replace(
-                array('{{ TABLE }}','{{ FIELD }}','{{ VALUE }}','{{ ID }}'),
-                array($table,$fields[$i],$values[$i],$id),
-                $sql);
-            echo $sql.'<br />';
-            $cn=$this->connect();
-            $test=$cn->exec($sql);
-        $sql="UPDATE {{ TABLE }} set {{ FIELD }} = {{ VALUE }} WHERE id={{ ID }}";
-
-        }
-        return $test;
-    }
+    
     public function fetch($data){
         $sql = "SELECT * FROM {{ TABLE }} WHERE {{ FIELD }}={{ VALUE }}";
         $table = \Parser::getDatabaseTableName(get_class($data));
 
-         if($table=="user" or $table=="User" or $table=="Moderator" or $table=="moderator" or $table=="Administrator" or $table=="administrator") $table="member";
-
-        foreach(get_class_methods($data) as $method){
+            foreach(get_class_methods($data) as $method){
             if(substr($method,0,3)!="get")
             continue;
             if(!is_null($data->{$method}())){
