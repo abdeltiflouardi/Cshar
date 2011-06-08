@@ -3,7 +3,7 @@
   <form>
     <div class="input-row">
       <label for="login">Login :</label>
-      <input type="text" name="login" id="login">
+      <input type="text" name="login" id="login" placeholder="Press your login">
     </div>
     <div class="input-row">
       <label for="first-name">Prenom :</label>

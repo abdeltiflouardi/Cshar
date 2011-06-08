@@ -2,7 +2,6 @@
 namespace Controller;
 
 use Model\Member;
-
 class MemberController extends AppController{
 	
 	public function add(){
@@ -70,7 +69,6 @@ class MemberController extends AppController{
                 foreach ($members as $item){
                     if($item->getPassword()==md5($_POST['member']['password'])){
                         echo "Connection Established";
-                        session_start();
                         $this->redirect("");
                     }else echo "Login/Password invalide";
                 }

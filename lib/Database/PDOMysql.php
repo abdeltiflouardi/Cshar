@@ -20,8 +20,8 @@ class PDOMysql {
     
     }
 
-    public function save($data) {
-        $sql = "INSERT INTO {{ TABLE }} ({{ FIELDS }}) VALUES ({{ VALUES }})";
+   public function save($data) {
+         $sql = "INSERT INTO {{ TABLE }} ({{ FIELDS }}) VALUES ({{ VALUES }})";
 
         $table = \Parser::getDatabaseTableName(get_class($data));
 
@@ -34,39 +34,18 @@ class PDOMysql {
 
             $field = \Parser::getFieldNameFromMethod($method);
 
+
             $fields[] = $field;
             $values[] = "'" . $data->{$method}() . "'";
         }
-            if($table=="member"){
-                $fields[]="nature";
-                $values[]="'user'";
-            }
-        if($table=="user" or $table=="User" or $table=="Moderator" or $table=="moderator" or $table=="Administrator" or $table=="administrator"){
-            $fields[]="nature";
-             switch($table){
 
-                 case "user":
-                 case "User":$values[]="'user'";break;
-
-                 case "moderator":
-                 case "Moderator":$values[]="'moderator'";break;
-
-                 case "administrator":
-                 case "Administrator": $values[]="'admin'";break;
-             }
-             $table="member";
-        }
-        if($table=="member"){
-            $fields[]="status";
-            $values[]=0;
-        }
         $fields_string = implode(',', $fields);
         $values_string = implode(',', $values);
 
         $sql = str_replace(
                 array('{{ TABLE }}', '{{ FIELDS }}', '{{ VALUES }}'), compact('table', 'fields_string', 'values_string'), $sql
         );
-      
+
         $cn = $this->connect();
         return $cn->exec($sql);
     }
@@ -75,23 +54,6 @@ class PDOMysql {
         $sql = "SELECT * FROM {{ TABLE }}";
 
         $table = \Parser::getDatabaseTableName(get_class($data));
-
-         if($table=="user" or $table=="User" or $table=="Moderator" or $table=="moderator" or $table=="Administrator" or $table=="administrator"){
-             switch($table){
-
-                 case "user":
-                 case "User":$sql.=" WHERE nature like 'user'";break;
-
-                 case "moderator":
-                 case "Moderator": $sql.=" WHERE nature like 'moderator'";break;
-
-                 case "administrator":
-                 case "Administrator": $sql.=" WHERE nature like 'admin'";break;
-             }
-             $table="member";
-
-         }
-
 
         $sql = str_replace('{{ TABLE }}', $table, $sql);
 

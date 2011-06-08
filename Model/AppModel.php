@@ -3,7 +3,6 @@
 namespace Model;
 
 use Database\Database;
-
 abstract class AppModel {
 
     public function save(array $data = array()) {
@@ -28,7 +27,7 @@ abstract class AppModel {
         foreach ($data as $field => $value) {
             $this->{'set' . ucfirst($field)}($value);
         }
-        echo "zer";
+        
         return \Database\Database::update($this);
     }
 
@@ -36,6 +35,8 @@ abstract class AppModel {
         
         return \Database\Database::fetch($this);
     }
+
+     
 
 
     

@@ -2,13 +2,15 @@
 namespace Controller;
 use Model\Moderator;
 use Model\Country;
+use Model\Member;
 class ModeratorController extends AppController{
 	
 	public function add(){
         $country=new Country();
         $countries=$country->fetchAll();
-        $moderator=new Moderator();
+        $moderator=new Member();
         if(isset($_POST['moderator'])){
+            $moderator->setNature("moderator");
             $moderator->save($_POST['moderator']);
             $this->redirect('?c=moderator');
         }
@@ -17,7 +19,7 @@ class ModeratorController extends AppController{
 	
 	public function update(){
         $id=$_GET['id'];
-        $moderator=new Moderator();
+        $moderator=new Member();
         $moderator->setId($id);
         $moderators=$moderator->fetch();
         $country=new Country();
@@ -32,7 +34,7 @@ class ModeratorController extends AppController{
 	
 	public function delete(){
          $id = $_GET['id'];
-         $moderator = new Moderator();
+         $moderator = new Member();
          $moderator->setId($id);
          $moderator->delete();
          $this->redirect('?c=Moderator');
@@ -42,8 +44,13 @@ class ModeratorController extends AppController{
 	}
 	
 	public function index(){
-        $moderator=new Moderator();
-        $moderators=$moderator->fetchAll();
+        $moderator=new Member();
+        $members=$moderator->fetchAll();
+        $moderators=array();
+        foreach($members as $moderator){
+            if($moderator->getNature()=="moderator")
+                $moderators[]=$moderator;
+        }
 		$this->view('moderator', 'index',compact('moderators'));
 	}
 	

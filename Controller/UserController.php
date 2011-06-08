@@ -1,5 +1,6 @@
 <?php
 namespace Controller;
+use Model\Member;
 use Model\User;
 use Model\Country;
 class UserController extends AppController{
@@ -7,8 +8,9 @@ class UserController extends AppController{
 	public function add(){
         $country=new Country();
         $countries=$country->fetchAll();
-        $user=new User();
+        $user=new Member();
         if(isset($_POST['user'])){
+            $user->setNature("user");
             $user->save($_POST['user']);
             $this->redirect('?c=User');
         }
@@ -17,14 +19,14 @@ class UserController extends AppController{
 	
 	public function update(){
         $id=$_GET['id'];
-        $user=new User();
+        $user=new Member();
         $user->setId($id);
         $users=$user->fetch();
         $country=new Country();
         $countries=$country->fetchAll();
 
         if(isset($_POST['modify'])){
-            echo $user->update($_POST['user']);
+             $user->update($_POST['user']);
             $this->redirect("?c=user");
         }
         $this->view('user','update',compact('countries','users'));
@@ -32,7 +34,7 @@ class UserController extends AppController{
 	
 	public function delete(){
         $id = $_GET['id'];
-            $user = new User();
+            $user = new Member();
             $user->setId($id);
             $user->delete();
 
@@ -44,9 +46,18 @@ class UserController extends AppController{
 	}
 	
 	public function index(){
-        $user=new User();
-        $users=$user->fetchAll();
+        $user=new Member();
+        
+        $members=$user->fetchAll();
+        $users=array();
 
+        foreach($members as $user){
+
+          if($user->getNature()=="user"){
+             $users[]=$user;
+          }
+
+       }
 		$this->view('user', 'index',compact('users'));
 	}
 	
