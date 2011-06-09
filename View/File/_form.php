@@ -13,7 +13,8 @@
      <label for="file-name">Nom du fichier :</label><input type="text" name="file-name" id="file-name">
     </div>
     <div class="input text">
-      <label for="file">Fichier :</label><input type="file" name="file" id="file">
+      <input id="file_upload" name="file_upload" type="file" />
+        <a href="javascript:$('#file_upload').uploadifyUpload();">Upload Files</a>
     </div>
     <div class="input text">
       <input type="submit" name="valid" value="Valider">

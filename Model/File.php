@@ -71,5 +71,7 @@ class File extends AppModel{
 	public function setDownloaded($downloaded){
 		$this->downloaded=$downloaded;
 	}
+
+    
 } 
 ?>
