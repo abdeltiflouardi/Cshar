@@ -46,6 +46,8 @@ class UserController extends AppController{
 	}
 	
 	public function index(){
+        
+
         $user=new Member();
         
         $members=$user->fetchAll();

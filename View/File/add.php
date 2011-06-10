@@ -10,10 +10,10 @@ $(document).ready(function() {
     'script'    : 'lib/uploadify/uploadify.php',
     'cancelImg' : 'lib/uploadify/cancel.png',
     'folder'    : 'lib/upload',
-    'auto'      : true,
-    'sizeLimit' : 102400,
-    'fileExt'     : '*.jpg;*.gif;*.png;*.xls',
-    'fileDesc'    : 'All'
+    'auto'      : true
+  //  'sizeLimit' : 102400
+  //  'fileExt'     : '*.jpg;*.gif;*.png;*.xls',
+ //   'fileDesc'    : 'All'
 
   });
 });

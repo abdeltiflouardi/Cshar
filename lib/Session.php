@@ -1,5 +1,5 @@
 <?php
-namespace lib;
+
 class Session
 {
     const SESSION_STARTED = TRUE;
@@ -11,7 +11,10 @@ class Session
     private static $instance;
 
 
-    private function __construct() {}
+    function __construct() {
+       $this->startSession();
+
+    }
 
 
     public static function getInstance()
@@ -37,13 +40,13 @@ class Session
     }
 
 
-    public function __set( $name , $value )
+    public function set( $name , $value )
     {
         $_SESSION[$name] = $value;
     }
 
 
-    public function __get( $name )
+    public function get( $name )
     {
         if ( isset($_SESSION[$name]))
         {

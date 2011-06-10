@@ -18,6 +18,7 @@ class ModeratorController extends AppController{
 	}
 	
 	public function update(){
+        if(($this->issetSession("nzame"))==1){
         $id=$_GET['id'];
         $moderator=new Member();
         $moderator->setId($id);
@@ -29,14 +30,22 @@ class ModeratorController extends AppController{
             echo $moderator->update($_POST['moderator']);
             $this->redirect("?c=moderator");
         }
+
         $this->view('moderator','update',compact('countries','moderators'));
+        }else{
+ 
+            $this->redirect("?c=moderator");
+
+        }
 	}
 	
 	public function delete(){
+
          $id = $_GET['id'];
          $moderator = new Member();
          $moderator->setId($id);
          $moderator->delete();
+
          $this->redirect('?c=Moderator');
 	}
 	
@@ -44,6 +53,8 @@ class ModeratorController extends AppController{
 	}
 	
 	public function index(){
+
+       
         $moderator=new Member();
         $members=$moderator->fetchAll();
         $moderators=array();

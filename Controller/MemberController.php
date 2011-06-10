@@ -11,11 +11,14 @@ class MemberController extends AppController{
 	}
 	
 	public function delete(){
+        
+
          $id = $_GET['id'];
          $member = new Member();
          $member->setId($id);
          $member->delete();
-         $this->redirect('?c=Member');
+       $this->redirect('?c=Member');
+        
 	}
 
 	public static function show() {
@@ -23,6 +26,7 @@ class MemberController extends AppController{
 	}
 	
 	public function index(){
+          $this->setSession('name','ayoub');
         $member=new Member();
         $members=$member->fetchAll();
         $this->view('Member','index',compact('members'));
