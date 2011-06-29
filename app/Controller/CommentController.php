@@ -1,0 +1,46 @@
+<?php
+namespace Controller;
+use Model\Comment;
+use Model\Member;
+use Model\File;
+class CommentController extends AppController{
+	
+	public function add(){
+        $user=new Member();
+        $users=$user->fetchAll();
+
+        $file=new File();
+        $files=$file->fetchAll();
+        if(!empty($_POST['comment'])){
+            $comment=new Comment();
+           $id=$comment->save($_POST['comment']);
+            
+           if(is_numeric($id)){
+                $this->redirect("?c=Comment");
+            }
+        }
+        $this->view('comment','add',compact('users','files'));
+	}
+	
+	public function update(){
+	}
+	
+	public function delete(){
+         $id = $_GET['id'];
+         $comment = new Comment();
+         $comment->setId($id);
+         $comment->delete();
+         $this->redirect('?c=Comment');
+	}
+	
+	public function show() {
+	}
+	
+	public function index(){
+        $comment=new Comment();
+        $comments=$comment->fetchAll();
+		$this->view('comment', 'index',compact('comments'));
+	}
+	
+}
+?>
