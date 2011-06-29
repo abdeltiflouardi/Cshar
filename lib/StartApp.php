@@ -1,13 +1,22 @@
 <?php
 
 class StartApp {
-    
+
     private $request;
-    
-    public function __construct() {
+    private $env;
+    private $app;
+
+    public function __construct($app = null, $env = null) {
+        $this->env = $env;
+        $this->app = $app;
+
         $this->parseRequest();
+        $this->loadConfig();
+        $this->loadSecurityConfig();
+
+        $this->doAction();
     }
-    
+
     /**
      * User request
      * This method chooses the controller to execute
@@ -16,19 +25,38 @@ class StartApp {
      *      m: method
      */
     public function parseRequest() {
-        $controller = !empty($_GET['c']) ? $_GET['c'] : 'index';
-        $method = !empty($_GET['m']) ? $_GET['m'] : 'index';
-        
-        $controller = 'Controller\\' . ucfirst($controller) . 'Controller';
-		if(is_file($controller.'.php')){
-        $instance = new $controller;
-        $instance->$method();
-		}else{
-		$controller='Controller\\indexController';
-		$instance=new $controller;
-		$instance->index();
-		}
+        $this->request['controller'] = !empty($_GET['c']) ? $_GET['c'] : 'index';
+        $this->request['action'] = !empty($_GET['a']) ? $_GET['a'] : 'index';
     }
+
+    /**
+     * Load config
+     */
+    public function loadConfig() {
+        require AD . 'Config' . DS . $this->env . '.php';
+    }
+
+    /**
+     * Load security
+     */
+    public function loadSecurityConfig() {
+        require AD . 'Config' . DS . 'security.php';
+        Security::getInstance()->check($security, $this->request);
+    }
+
+    /**
+     * call action
+     */
+    public function doAction() {
+        $controller = $this->request['controller'];
+        $action = $this->request['action'];
+
+        $controller = 'Controller\\' . ucfirst($controller) . 'Controller';
+
+        $instance = new $controller;
+        $instance->$action();
+    }
+
 }
 
 ?>

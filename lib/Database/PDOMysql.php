@@ -17,12 +17,12 @@ class PDOMysql {
     }
 
     public function disconnect() {
-    
+        
     }
 
-   public function save($data) {
+    public function insert($data) {
          $sql = "INSERT INTO {{ TABLE }} ({{ FIELDS }}) VALUES ({{ VALUES }})";
-
+ 
         $table = \Parser::getDatabaseTableName(get_class($data));
 
         foreach (get_class_methods($data) as $method) {
@@ -47,7 +47,48 @@ class PDOMysql {
         );
 
         $cn = $this->connect();
-        return $cn->exec($sql);
+        return $cn->exec($sql);   
+    }
+
+    public function update($data) {
+	$sql = "update {{ TABLE }} SET {{ FIELDS_VALUES }} WHERE id={{ ID }}";
+
+        $table = \Parser::getDatabaseTableName(get_class($data));
+
+        foreach (get_class_methods($data) as $method) {
+            if (substr($method, 0, 3) != 'get')
+                continue;
+
+            if (is_null($data->{$method}()))
+                continue;
+
+            $field = \Parser::getFieldNameFromMethod($method);
+
+
+            $fields_values[] = $field . "='" . $data->{$method}() . "'";
+        }
+
+        $fields_values_string = implode(', ', $fields_values);
+
+        $id = $data->getId();
+
+        $sql = str_replace(
+                array('{{ TABLE }}', '{{ FIELDS_VALUES }}', '{{ ID }}'), compact('table', 'fields_values_string', 'id'), $sql
+        );
+
+        $cn = $this->connect();
+        return $cn->exec($sql);   
+    }
+
+    public function save($data) {
+	$id = $data->getId();
+	if (!empty($id))
+		return self::update($data);
+	else
+		return self::insert($data);
+
+	return -1;
+	
     }
 
     public function fetchAll($data) {
@@ -72,7 +113,30 @@ class PDOMysql {
         return $items;
     }
 
-	
+    public function findById(&$data) {
+        self::findBy($data, array('id' => $data->getId()));
+    }
+
+    public function findBy(&$data, $criteria) {
+        $sql = "SELECT * FROM {{ TABLE }} WHERE {{ WHERE }}";
+
+        $table = \Parser::getDatabaseTableName(get_class($data));
+
+        foreach ($criteria as $field => $value)
+            $where[] = $field . '="' . $value . '"';
+
+        $where = implode('AND', $where);
+        $sql = str_replace(array('{{ TABLE }}', '{{ WHERE }}'), array($table, $where), $sql);
+
+        $cn = $this->connect();
+        $items = array();
+        foreach ($cn->query($sql)->fetchAll(\PDO::FETCH_ASSOC) as $item) {
+            foreach ($item as $field => $value) {
+                $method = \Parser::getMethodFromFieldName($field);
+                $data->{$method}($value);
+            }
+        }
+    }
 
     public function delete($data) {
         $sql = "DELETE FROM {{ TABLE }} WHERE id={{ ID }}";
@@ -83,46 +147,13 @@ class PDOMysql {
         
         $table = \Parser::getDatabaseTableName(get_class($data));
         $id = $data->getId();
-         if($table=="user" or $table=="User" or $table=="Moderator" or $table=="moderator" or $table=="Administrator" or $table=="administrator"){
-             $table="member";
-
-         }
+        
         $sql = str_replace(array('{{ TABLE }}', '{{ ID }}'), array($table, $id), $sql);
 
         $cn = $this->connect();
         return $cn->exec($sql);
     }
 
-     public function update($data) {
-	    $sql = "update {{ TABLE }} SET {{ FIELDS_VALUES }} WHERE id={{ ID }}";
-
-            $table = \Parser::getDatabaseTableName(get_class($data));
-
-           foreach (get_class_methods($data) as $method) {
-                if (substr($method, 0, 3) != 'get')
-                    continue;
-
-                if (is_null($data->{$method}()))
-                    continue;
-
-                $field = \Parser::getFieldNameFromMethod($method);
-
-
-                $fields_values[] = $field . "='" . $data->{$method}() . "'";
-            }
-
-            $fields_values_string = implode(', ', $fields_values);
-
-            $id = $data->getId();
-
-            $sql = str_replace(
-                array('{{ TABLE }}', '{{ FIELDS_VALUES }}', '{{ ID }}'), compact('table', 'fields_values_string', 'id'), $sql
-            );
-
-            $cn = $this->connect();
-            return $cn->exec($sql);
-        }
-    
     public function fetch($data){
         $sql = "SELECT * FROM {{ TABLE }} WHERE {{ FIELD }}={{ VALUE }}";
         $table = \Parser::getDatabaseTableName(get_class($data));
@@ -141,9 +172,9 @@ class PDOMysql {
         $sql = str_replace(array('{{ TABLE }}','{{ FIELD }}','{{ VALUE }}'),array($table,$field,$value), $sql);
         $cn = $this->connect();
          $items=array();
-        
+
         $item=$cn->query($sql);
-       
+
         $item=$item->fetch(\PDO::FETCH_ASSOC);
             $current_class = get_class($data);
             $object = new $current_class;
@@ -152,15 +183,13 @@ class PDOMysql {
                 $method = \Parser::getMethodFromFieldName($field);
                 $object->{$method}($value);
             }
-        
+
             $items[] = $object;
 
             }
         return $items;
 
     }
-
-
 }
 
 ?>
